@@ -25,6 +25,13 @@ files += %w(
  ripper/sexp.rb
  ripper.rb
  date.rb
+
+ bigdecimal.rb
+ bigdecimal/jacobian.rb
+ bigdecimal/ludcmp.rb
+ bigdecimal/math.rb
+ bigdecimal/newton.rb
+ bigdecimal/util.rb
 ).map {|f| ".ext/common/" + f }
 
 files += %w(
@@ -330,9 +337,23 @@ files += %w(
  cgi/session.rb
  cgi/session/pstore.rb
  cgi/util.rb
+
+ yaml.rb
+ yaml/dbm.rb
+ yaml/store.rb
 ).map {|f| "lib/" + f }
 
 Dir.chdir("ruby") do
+  files += Dir["liquid/**/*"]
+  # Include minitest to run tests
+  # files += Dir["minitest/**/*"]
+  files << "lib/mutex_m.rb"
+  files << "lib/English.rb"
+  files << "lib/base64.rb"
+
+  files << ".ext/common/psych.rb"
+  files += Dir[".ext/common/psych/**/*"]
+
   system(
     file_packager,
     "../app/public/fs.data",

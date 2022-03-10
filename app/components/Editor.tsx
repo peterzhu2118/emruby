@@ -2,7 +2,6 @@ import { FC, MutableRefObject, useEffect, useRef } from "react";
 import CodeMirror from "codemirror";
 import { Card } from "react-bootstrap";
 import "codemirror/lib/codemirror.css";
-import "codemirror/mode/ruby/ruby.js";
 
 interface Props {
   text: string;

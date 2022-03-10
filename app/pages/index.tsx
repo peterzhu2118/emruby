@@ -10,37 +10,13 @@ import { Terminal } from "xterm";
 const Term = dynamic(() => import("../components/Term"), { ssr: false });
 const Editor = dynamic(() => import("../components/Editor"), { ssr: false });
 
-const code = `puts "# Show Ruby version"
-p RUBY_DESCRIPTION
+const code = `
+This is a liquid template.
 
-puts
-puts "# Execute Ruby code"
-p 1 + 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
-p "Hello" + "world"
-
-puts
-puts "# Execute JS code from Ruby"
-p emscripten_run_script_int(<<JAVASCRIPT)
-(function() {
-  var sum = 0;
-  for (var i = 1; i <= 100; i++) sum += i;
-  return sum;
-})();
-JAVASCRIPT
-
-puts
-puts "# Sleep one second"
-sleep 1
-
-puts
-puts "# Use an extension library"
-
-require "stringio"
-p StringIO.new("foobar").read(3)
-
-puts
-puts "# Use an ruby library (did_you_mean) and show an exception"
-StrngIO`;
+{% for i in (1..5) %}
+  {{- i }}
+{% endfor %}
+`.trim();
 
 const Home: FC = () => {
   const [xterm, setXterm] = useState<Terminal>();
@@ -86,12 +62,11 @@ const Home: FC = () => {
   return (
     <div className="container-fluid">
       <Head>
-        <title>emruby: A Ruby interpreter on browser</title>
+        <title>emliquid: A liquid interpreter in the browser</title>
       </Head>
-      <h1>emruby: A Ruby interpreter on browser</h1>
+      <h1>emliquid: A liquid interpreter in the browser</h1>
       <p>
-        This is a demonstration of Ruby interpreter (MRI) that works on browser
-        (experimental). Powered by{" "}
+        This is a fork of <a href="https://github.com/mame/emruby">emruby</a> that runs liquid in the browser through WASM. Powered by{" "}
         <a href="https://emscripten.org/">Emscripten</a>.
       </p>
       <h2 className="mt-4">Code</h2>
@@ -114,18 +89,6 @@ const Home: FC = () => {
       </Button>
       <h2 className="mt-4">Result</h2>
       <Term onXterm={onXterm} needFit={true} needLocalEcho={false} />
-      <h2 className="mt-4">See also</h2>
-      <ul>
-        <li>
-          <Link href="/irb">irb (experimental)</Link>
-        </li>
-        <li>
-          <Link href="/irb-reline">irb with reline (very experimental)</Link>
-        </li>
-        <li>
-          <Link href="https://github.com/mame/emruby">source (github)</Link>
-        </li>
-      </ul>
     </div>
   );
 };
